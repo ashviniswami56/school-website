@@ -12,55 +12,55 @@ const videos = [
     id: 1,
     category: 'Chairman Message',
     thumbnail: '/videos/video1.png',
-    youtubeUrl: 'https://youtu.be/-vK9ylnK13M'
+    youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
   {
     id: 2,
     category: 'Chairman Message',
     thumbnail: '/videos/video2.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_2'
+    youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
   {
     id: 3,
     category: 'Chairman Message',
     thumbnail: '/videos/video3.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_3'
+    youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
    {
     id: 4,
     category: 'Miscellaneous',
     thumbnail: '/videos/video4.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_4'
+    youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
    {
     id: 5,
     category: 'Chairman Message',
     thumbnail: '/videos/video5.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_5'
+    youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
    {
     id: 6,
     category: 'Chairman Message',
     thumbnail: '/videos/video6.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_6'
+   youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
    {
     id: 7,
     category: 'Activities',
     thumbnail: '/videos/video7.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_7'
+    youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
    {
     id: 8,
     category: 'Sports',
     thumbnail: '/videos/video8.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_8'
+   youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   },
    {
     id: 9,
     category: 'Sports',
     thumbnail: '/videos/video9.jpg',
-    youtubeUrl: 'https://www.youtube.com/embed/VIDEO_ID_9'
+    youtubeUrl: 'https://www.youtube.com/embed/QBPMZQL4N1Q'
   }
 ]
 
@@ -71,10 +71,12 @@ export default function VideoGallery() {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [currentVideo, setCurrentVideo] = useState(null)
 
-  const openModal = (url) => {
-    setCurrentVideo(url)
-    setModalIsOpen(true)
-  }
+ const openModal = (url) => {
+  console.log("Opening video modal for:", url)
+  setCurrentVideo(`${url}?autoplay=1`)
+  setModalIsOpen(true)
+}
+
 
   const closeModal = () => {
     setModalIsOpen(false)
@@ -132,6 +134,7 @@ export default function VideoGallery() {
         xmlns="http://www.w3.org/2000/svg"
         className="h-6 w-6 text-red-600 ml-1"
         viewBox="0 0 24 24"
+
         fill="currentColor"
       >
         <path d="M8 5v14l11-7z" />
@@ -144,24 +147,33 @@ export default function VideoGallery() {
       ))}
     </div>
 
-    <Modal
-      isOpen={modalIsOpen}
-      onRequestClose={closeModal}
-      className="max-w-3xl w-full bg-white p-0 rounded-lg overflow-hidden shadow-xl mx-auto my-10"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
-    >
-      {currentVideo && (
-        <iframe
-          width="100%"
-          height="400"
-          src={currentVideo}
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          title="YouTube video"
-        />
-      )}
-    </Modal>
+   <Modal
+  isOpen={modalIsOpen}
+  onRequestClose={closeModal}
+  className="relative max-w-3xl w-full bg-white p-0 rounded-lg overflow-hidden shadow-xl mx-auto my-10 z-[9999]"
+  overlayClassName="fixed inset-0 flex items-center justify-center bg-transparent z-[9999]"
+>
+  <button
+    onClick={closeModal}
+    className="absolute top-2 right-2 text-white bg-red-500 rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 z-50"
+  >
+    ✕
+  </button>
+
+  {currentVideo && (
+    <iframe
+      width="100%"
+      height="400"
+      src={`${currentVideo}?autoplay=1`}
+      frameBorder="0"
+      allow="autoplay; encrypted-media"
+      allowFullScreen
+      title="YouTube video"
+    />
+  )}
+</Modal>
+
+
   </div>
 )
 }
